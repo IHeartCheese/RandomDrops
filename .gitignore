@@ -1,1 +1,5 @@
-"target\n .idea" 
+target/*
+target
+RandomDrops.iml
+out
+out/*
