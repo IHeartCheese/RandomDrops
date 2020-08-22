@@ -3,3 +3,4 @@ target
 RandomDrops.iml
 out
 out/*
+.idea
