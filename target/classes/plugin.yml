@@ -1,9 +1,0 @@
-name: RandomDrops
-main: plugins.RandomDrops.RandomDrops
-version: 0.0.1
-author: Kingy99
-commands:
-  activate:
-    description: This is a demo command.
-    usage: /activate
-    permission-message: You don't have permission to execute this commmand.
