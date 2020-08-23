@@ -1,11 +1,13 @@
 package plugins.RandomDrops;
 
-import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import plugins.RandomDrops.Listeners.Listeners;
+
+import java.util.HashMap;
 
 public class RandomDrops extends JavaPlugin {
     private static RandomDrops instance;
@@ -19,7 +21,6 @@ public class RandomDrops extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        //getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 
     @Override
@@ -37,11 +38,13 @@ public class RandomDrops extends JavaPlugin {
             if (randType.equalsIgnoreCase("block")) {
                 blockRandom = true;
                 totalRandom = false;
+                Listeners.resetDropMap();
             } else if (randType.equalsIgnoreCase("total")) {
                 totalRandom = true;
                 blockRandom = false;
             }
             getServer().getPluginManager().registerEvents(new Listeners(), this);
+            Listeners.updateBlackList();
 
             return true;
         } else if (cmd.getName().equalsIgnoreCase("activate") && (!blockRandom || !totalRandom)) {
