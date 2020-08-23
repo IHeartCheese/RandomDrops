@@ -4,6 +4,10 @@ version: 0.0.1
 author: Kingy99
 commands:
   activate:
-    description: This is a demo command.
-    usage: /activate
+    description: Activates the selected random item dropper.
+    usage: /activate <total/block>
+    permission-message: You don't have permission to execute this commmand.
+  deactivate:
+    description: Disables any random item droppers.
+    usage: /deactivate
     permission-message: You don't have permission to execute this commmand.

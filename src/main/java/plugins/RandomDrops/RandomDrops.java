@@ -3,11 +3,14 @@ package plugins.RandomDrops;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 import plugins.RandomDrops.Listeners.Listeners;
 
 public class RandomDrops extends JavaPlugin {
     private static RandomDrops instance;
+    public static Boolean totalRandom = false;
+    public static Boolean blockRandom = false;
 
     public static RandomDrops getInstance() {
         return instance;
@@ -16,7 +19,7 @@ public class RandomDrops extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        getServer().getPluginManager().registerEvents(new Listeners(), this);
+        //getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 
     @Override
@@ -27,10 +30,29 @@ public class RandomDrops extends JavaPlugin {
     // COMMANDS
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (cmd.getName().equalsIgnoreCase("activate")) {
+        if (cmd.getName().equalsIgnoreCase("activate") && !blockRandom && !totalRandom) {
+            String randType = args[0];
 
-            Bukkit.broadcastMessage("ACTIVATED");
+            // Activate corresponding random drop method
+            if (randType.equalsIgnoreCase("block")) {
+                blockRandom = true;
+                totalRandom = false;
+            } else if (randType.equalsIgnoreCase("total")) {
+                totalRandom = true;
+                blockRandom = false;
+            }
+            getServer().getPluginManager().registerEvents(new Listeners(), this);
 
+            return true;
+        } else if (cmd.getName().equalsIgnoreCase("activate") && (!blockRandom || !totalRandom)) {
+
+            sender.sendMessage("Must use /deactivate to disable currently running method.");
+
+        } else if (cmd.getName().equalsIgnoreCase("deactivate")) {
+            // Deactivate both random drop methods
+            totalRandom = false;
+            blockRandom = false;
+            HandlerList.unregisterAll(new Listeners());
             return true;
         }
         return false;
